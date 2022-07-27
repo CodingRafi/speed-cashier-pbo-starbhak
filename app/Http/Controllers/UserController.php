@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -10,9 +11,9 @@ class UserController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:index_user|create_user|edit_user|delete_user', ['only' => ['index','show']]);
+         $this->middleware('permission:index_user|create_user|update_user|delete_user', ['only' => ['index','show']]);
          $this->middleware('permission:create_user', ['only' => ['create','store']]);
-         $this->middleware('permission:edit_user', ['only' => ['edit','update']]);
+         $this->middleware('permission:update_user', ['only' => ['edit','update']]);
          $this->middleware('permission:delete_user', ['only' => ['destroy']]);
     }
     /**
@@ -61,6 +62,8 @@ class UserController extends Controller
         $user = User::create($validatedData);
         $user->assignRole($request->role);
 
+        Log::logCreate('Menambahkan User ' . $request->name);
+
         return redirect('/user');
     }
 
@@ -105,11 +108,14 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,'.$user->id,
             'role' => 'required'
         ]);
+        $userOld = User::findorFail($user->id);
 
         $user->update($validatedData);
         \DB::table('model_has_roles')->where('model_id',$user->id)->delete();
-
+        
         $user->assignRole($request->role);
+
+        Log::logCreate('Mengubah User ' . $userOld->name);
 
         return redirect('/user');
     }
@@ -123,6 +129,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        Log::logCreate('Menghapus User ' . $user->name);
         return redirect()->back();
     }
 }

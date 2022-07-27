@@ -65,12 +65,14 @@
         </li>
 
         <!-- Users -->
-        <li class="menu-item {{ Request::is('user/*') ? 'active' : '' }} {{ Request::is('user') ? 'active' : '' }}">
-            <a href="/user" class="menu-link">
-                <i class='menu-icon tf-icons bx bx-user'></i>
-                <div data-i18n="Analytics">Users</div>
-            </a>
-        </li>
+        @can('index_user', 'create_user', 'edit_user', 'delete_user')
+            <li class="menu-item {{ Request::is('user/*') ? 'active' : '' }} {{ Request::is('user') ? 'active' : '' }}">
+                <a href="/user" class="menu-link">
+                    <i class='menu-icon tf-icons bx bx-user'></i>
+                    <div data-i18n="Analytics">Users</div>
+                </a>
+            </li>
+        @endcan
 
         <!-- Menus -->
         @can('index_menu', 'create_menu', 'edit_menu', 'delete_menu')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
@@ -11,9 +12,9 @@ class MenuController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:index_menu|create_menu|edit_menu|delete_menu', ['only' => ['index','show']]);
+         $this->middleware('permission:index_menu|create_menu|update_menu|delete_menu', ['only' => ['index','show']]);
          $this->middleware('permission:create_menu', ['only' => ['create','store']]);
-         $this->middleware('permission:edit_menu', ['only' => ['edit','update']]);
+         $this->middleware('permission:update_menu', ['only' => ['edit','update']]);
          $this->middleware('permission:delete_menu', ['only' => ['destroy']]);
     }
     /**
@@ -54,6 +55,8 @@ class MenuController extends Controller
         ]);
 
         Menu::create($validatedData);
+
+        Log::logCreate('Menambahkan Menu ' . $request->nama);
 
         return redirect('/menu');
     }
@@ -96,8 +99,12 @@ class MenuController extends Controller
             'harga' => 'required|numeric',
             'kategori' => 'required' 
         ]);
+
+        $oldMenu = Menu::findOrFail($menu->id);
         
         $menu->update($validatedData);
+
+        Log::logCreate('Mengubah menu ' . $oldMenu->nama);
 
         return redirect('/menu');
     }
@@ -111,6 +118,7 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         $menu->delete();
+        Log::logCreate('Menghapus menu ' . $menu->nama);
         return redirect()->back();
     }
 }
