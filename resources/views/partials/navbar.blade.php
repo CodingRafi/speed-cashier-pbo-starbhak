@@ -61,10 +61,17 @@ id="layout-navbar">
                     <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                    <BreezeDropdownLink :href="route('logout')" method="post" as="button">
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item">
+                            <i class="bx bx-power-off me-2"></i>
+                            <span class="align-middle"logot>Log out</span>
+                        </button>
+                    </form>
+                    <!-- <BreezeDropdownLink :href="route('logout')" method="post" as="button">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
-                    </BreezeDropdownLink>
+                    </BreezeDropdownLink> -->
                 </li>
             </ul>
         </li>
