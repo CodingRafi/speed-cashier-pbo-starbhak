@@ -8,6 +8,13 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:index_user|create_user|edit_user|delete_user', ['only' => ['index','show']]);
+         $this->middleware('permission:create_user', ['only' => ['create','store']]);
+         $this->middleware('permission:edit_user', ['only' => ['edit','update']]);
+         $this->middleware('permission:delete_user', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -93,7 +100,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'role' => 'required'
+        ]);
+
+        $user->update($validatedData);
+        \DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+
+        $user->assignRole($request->role);
+
+        return redirect('/user');
     }
 
     /**
@@ -104,6 +122,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->back();
     }
 }

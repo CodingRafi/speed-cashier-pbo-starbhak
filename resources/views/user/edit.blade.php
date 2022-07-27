@@ -7,8 +7,9 @@
                 <div class="card" style="min-height: 28rem;">
                     <div class="card-body">
                         <h5 class="card-title text-primary">Update User</h5>
-                        <form action="/user" method="post">
+                        <form action="/user/{{ $user->id }}" method="post">
                             @csrf
+                            @method('patch')
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="name"
@@ -37,7 +38,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Update User</button>
                         </form>
                     </div>
                 </div>

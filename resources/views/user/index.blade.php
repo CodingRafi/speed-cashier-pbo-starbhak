@@ -7,8 +7,10 @@
                 <div class="card" style="min-height: 28rem;">
                     <div class="card-body">
                         <h5 class="card-title text-primary">User</h5>
-                        <a href="/user/create" class="btn btn-primary position-absolute" style="top: 1rem;right: 1rem;">Create
-                            User</a>
+                        @can('create_user')
+                            <a href="/user/create" class="btn btn-primary position-absolute" style="top: 1rem;right: 1rem;">Create
+                                User</a>
+                        @endcan
                         <div class="table-responsive text-nowrap mt-3">
                             <table class="table text-center">
                                 <thead>
@@ -17,7 +19,9 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>Actions</th>
+                                        @can('update_user', 'delete_user')
+                                            <th>Actions</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
@@ -31,14 +35,24 @@
                                                     {{ $role }}
                                                 @endforeach
                                             </td>
-                                            <td class="d-flex justify-content-center">
-                                                <a href="/user/{{ $user->id }}/edit" class="btn btn-warning" style="margin-right: 1rem;{{ $user->getRoleNames()[0] == 'admin' ? 'pointer-events: none;opacity: .7;' : '' }}">Update</a>
-                                                <form action="/user/{{ $user->id }}" method="POST">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" onclick="return confirm('Apakah anda yakin akan menghapus user ini?')" class="btn btn-danger " {{ ($user->getRoleNames()[0] == 'admin') ? 'disabled' : '' }}>Delete</button>
-                                                </form>
-                                            </td>
+                                            @can('update_user', 'delete_user')
+                                                <td class="d-flex justify-content-center">
+                                                    @can('update_user')
+                                                        <a href="/user/{{ $user->id }}/edit" class="btn btn-warning"
+                                                            style="margin-right: 1rem;{{ $user->getRoleNames()[0] == 'admin' ? 'pointer-events: none;opacity: .7;' : '' }}">Update</a>
+                                                    @endcan
+                                                    @can('delete_user')
+                                                        <form action="/user/{{ $user->id }}" method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit"
+                                                                onclick="return confirm('Apakah anda yakin akan menghapus user ini?')"
+                                                                class="btn btn-danger "
+                                                                {{ $user->getRoleNames()[0] == 'admin' ? 'disabled' : '' }}>Delete</button>
+                                                        </form>
+                                                    @endcan
+                                                </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 </tbody>

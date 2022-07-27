@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 
@@ -26,6 +27,7 @@ use App\Http\Controllers\DashboardController;
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::resource('/user', UserController::class);
+    Route::resource('/menu', MenuController::class);
 });
 
 require __DIR__.'/auth.php';
