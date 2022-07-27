@@ -24,13 +24,15 @@
                                 <select class="form-select" name="role" id="role" required>
                                     @foreach ($roles as $role)
                                         @if ($role != 'admin')
-                                        @if ($user->get)
-                                            
-                                        @else
-                                            
-                                        @endif
-                                            <option value="{{ $role }}" class="text-capitalize">{{ $role }}
-                                            </option>
+                                            @if ($user->getRoleNames()[0] == $role)
+                                                <option value="{{ $role }}" class="text-capitalize" selected>
+                                                    {{ $role }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $role }}" class="text-capitalize">
+                                                    {{ $role }}
+                                                </option>
+                                            @endif
                                         @endif
                                     @endforeach
                                 </select>
