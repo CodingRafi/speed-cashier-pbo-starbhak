@@ -1,10 +1,12 @@
+@extends('mylayouts.guard')
+@section('container')
 <div class="container d-flex align-item-center justify-content" style="width: 30rem;">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
           <!-- Register -->
           <div class="card">
             <div class="card-body">
-              <!-- Logo -->
+              <!--  o -->
               <div class="app-brand justify-content-center">
                 <a href="index.html" class="app-brand-link gap-2">
                   <span class="app-brand-text demo text-body fw-bolder text-capitalize">Speed Cashier</span>
@@ -12,16 +14,17 @@
               </div>
               <!-- /Logo -->
               <h4 class="mb-2">Welcome to Speed Cashier!</h4>
-              <p class="mb-2">Please sign-in to your account and start the adventure</p>
+              <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
+                @csrf
                 <div class="mb-3">
                   <label for="email" class="form-label">Email or Username</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email-username"
+                    name="email"
                     placeholder="Enter your email or username"
                     autofocus
                   />
@@ -52,7 +55,7 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                  <button class="btn btn-primary d-grid w-100" type="submit" style="color: #696cff;"><span style="color: white;">Sign In</span></button>
                 </div>
               </form>
 
@@ -63,3 +66,4 @@
         </div>
       </div>
     </div>
+    @endsection
