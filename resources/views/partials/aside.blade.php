@@ -56,6 +56,7 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
+        @can('dashboard')    
         <!-- Dashboard -->
         <li class="menu-item {{ Request::is('/') ? 'active' : '' }}">
             <a href="/" class="menu-link">
@@ -63,6 +64,7 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
+        @endcan
 
         <!-- Users -->
         @can('index_user', 'create_user', 'edit_user', 'delete_user')
