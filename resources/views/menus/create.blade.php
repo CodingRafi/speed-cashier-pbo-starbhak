@@ -21,12 +21,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="kategori" class="form-label">Kategori</label>
-                                <select class="form-select" name="kategori" id="kategori">
-                                    <option value="makanan">Makanan</option>
-                                    <option value="minuman">Minuman</option>
+                                <select class="form-select" name="kategori_id" id="kategori">
+                                    @foreach ($categories as $kategori)
+                                        <option value="{{ $kategori->id }}" class="text-capitalize">{{ $kategori->nama }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Create User</button>
+                            <button type="submit" class="btn btn-primary">Create Menu</button>
                         </form>
                     </div>
                 </div>

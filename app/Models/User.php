@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function log(){
         return $this->hasMany(Log::class);
     }
+
+    public function transaksi(){
+        return $this->hasMany(Transaksi::class);
+    }
 }

@@ -22,9 +22,16 @@
                             </div>
                             <div class="mb-3">
                                 <label for="kategori" class="form-label">Kategori</label>
-                                <select class="form-select" name="kategori" id="kategori">
-                                    <option value="makanan" {{ ($menu->kategori == 'makanan' ? 'selected' : '') }}>Makanan</option>
-                                    <option value="minuman" {{ ($menu->kategori == 'minuman' ? 'selected' : '') }}>Minuman</option>
+                                <select class="form-select" name="kategori_id" id="kategori">
+                                    @foreach ($categories as $kategori)
+                                        @if ($kategori->id == $menu->kategori_id)
+                                            <option value="{{ $kategori->id }}" class="text-capitalize" selected>
+                                                {{ $kategori->nama }}</option>
+                                        @else
+                                            <option value="{{ $kategori->id }}" class="text-capitalize">
+                                                {{ $kategori->nama }}</option>
+                                        @endif
+                                    @endforeach
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Update Menu</button>

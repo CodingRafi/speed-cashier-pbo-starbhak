@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Kategori;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMenuRequest;
@@ -37,7 +38,10 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menus.create');
+        $categories = Kategori::all();
+        return view('menus.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -51,7 +55,7 @@ class MenuController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'harga' => 'required|numeric',
-            'kategori' => 'required' 
+            'kategori_id' => 'required' 
         ]);
 
         Menu::create($validatedData);
@@ -80,8 +84,10 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
+        $categories = Kategori::all();
         return view('menus.edit', [
-            'menu' => $menu
+            'menu' => $menu,
+            'categories' => $categories
         ]);
     }
 
@@ -97,7 +103,7 @@ class MenuController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'harga' => 'required|numeric',
-            'kategori' => 'required' 
+            'kategori_id' => 'required' 
         ]);
 
         $oldMenu = Menu::findOrFail($menu->id);

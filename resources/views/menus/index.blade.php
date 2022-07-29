@@ -29,7 +29,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td class="text-capitalize">{{ $menu->nama }}</td>
-                                            <td class="text-capitalize">{{ $menu->kategori }}</td>
+                                            <td class="text-capitalize">{{ $menu->kategori->nama }}</td>
                                             <td>{{ $menu->harga }}</td>
                                             @can('update_menu', 'delete_menu')
                                                 <td class="d-flex justify-content-center">
