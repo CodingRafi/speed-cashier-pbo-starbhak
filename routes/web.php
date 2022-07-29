@@ -28,4 +28,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/user', UserController::class);
 });
 
+
+Route::get('/forgot', function () {
+    return view('forgot.forgot-password');
+});
+
+
+
 require __DIR__.'/auth.php';
