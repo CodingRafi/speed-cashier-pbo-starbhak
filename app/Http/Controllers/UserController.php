@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Log;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:index_user|create_user|update_user|delete_user', ['only' => ['index','show']]);
+         $this->middleware('permission:create_user', ['only' => ['create','store']]);
+         $this->middleware('permission:update_user', ['only' => ['edit','update']]);
+         $this->middleware('permission:delete_user', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('user.index', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -24,7 +36,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::pluck('name','name')->all();
+        return view('user.create',[
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -35,7 +50,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'password' => 'required',
+            'email' => 'required|email|unique:users',
+            'role' => 'required'
+        ]);
+
+        $validatedData['password'] = \Hash::make($request->password);
+        
+        $user = User::create($validatedData);
+        $user->assignRole($request->role);
+
+        Log::logCreate('Menambahkan User ' . $request->name);
+
+        return redirect('/user');
     }
 
     /**
@@ -57,7 +86,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        //! pluck berfungsi untuk mengambil satu atau lebih field 
+        $roles = Role::pluck('name')->all();
+        return view('user.edit', [
+            'roles' => $roles,
+            'user' => $user
+        ]);
     }
 
     /**
@@ -69,7 +103,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'role' => 'required'
+        ]);
+        $userOld = User::findorFail($user->id);
+
+        $user->update($validatedData);
+        \DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+        
+        $user->assignRole($request->role);
+
+        Log::logCreate('Mengubah User ' . $userOld->name);
+
+        return redirect('/user');
     }
 
     /**
@@ -80,6 +128,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        Log::logCreate('Menghapus User ' . $user->name);
+        return redirect()->back();
     }
 }

@@ -18,12 +18,6 @@ id="layout-navbar">
     <!-- /Search -->
 
     <ul class="navbar-nav flex-row align-items-center ms-auto">
-        <!-- Place this tag where you want the button to render. -->
-        <li class="nav-item lh-1 me-3">
-            <a class="github-button" href="#" data-icon="octicon-star" data-size="large" data-show-count="true"
-                aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
-        </li>
-
         <!-- User -->
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -42,8 +36,8 @@ id="layout-navbar">
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <span class="fw-semibold d-block">John Doe</span>
-                                <small class="text-muted">Admin</small>
+                                <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                                <small class="text-muted">{{ Auth::user()->getRoleNames()[0] }}</small>
                             </div>
                         </div>
                     </a>
@@ -61,17 +55,13 @@ id="layout-navbar">
                     <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                    <form action="/logout" method="post">
+                    <form action="/logout" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item">
                             <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle"logot>Log out</span>
+                            <span class="align-middle">Log Out</span>
                         </button>
                     </form>
-                    <!-- <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                    </BreezeDropdownLink> -->
                 </li>
             </ul>
         </li>

@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
     
         $role = Role::create(['name' => 'admin']);
      
-        $permissions = ['5', '6', '7', '8', '9'];
+        $permissions = ['5', '6', '7', '8', '9', '21'];
    
         $role->syncPermissions($permissions);
      
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
     
         $roleManager = Role::create(['name' => 'manager']);
      
-        $permissionsManager = ['1', '2', '3', '4', '13','9'];
+        $permissionsManager = ['1', '2', '3', '4', '13','9', '17', '18', '19', '20', '21'];
    
         $roleManager->syncPermissions($permissionsManager);
      
