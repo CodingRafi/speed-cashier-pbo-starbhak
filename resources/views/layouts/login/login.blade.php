@@ -1,4 +1,9 @@
 @extends('mylayouts.guard')
+
+@section('title')
+    Login
+@endsection
+
 @section('container')
 <div class="container d-flex align-item-center justify-content" style="width: 30rem;">
       <div class="authentication-wrapper authentication-basic container-p-y">
@@ -32,7 +37,7 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
-                    <a href="/forgot">
+                    <a href="/forgot-password">
                       <small>Forgot Password?</small>
                     </a>
                   </div>

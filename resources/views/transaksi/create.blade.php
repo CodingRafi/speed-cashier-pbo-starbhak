@@ -6,10 +6,13 @@
             <div class="col mb-4">
                 <div class="card" style="min-height: 28rem;">
                     <div class="card-body">
+                        @if (count($menus) > 0)
                         <button class="btn btn-primary d-flex justify-content-center align-items-center p-0 position-absolute tambah-colom" style="border-radius: 50%;width: 2rem;height: 2rem;top: 1rem;right: 1rem;">+</button>
+                        @endif 
                         <h5 class="card-title text-primary">Create Transaction</h5>
                         <form action="/transaksi" method="post">
                             @csrf
+                            @if (count($menus) > 0) 
                             <div class="container-form">
                                 <div class="row container-input-1">
                                     <div class="col-8">
@@ -35,6 +38,13 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Create User</button>
+                            @else
+                            <div class="container d-flex mt-5 justify-content-center align-items-center">
+                                <div class="alert alert-primary" role="alert">
+                                    Maaf, Tidak ada menu tersedia
+                                  </div>
+                            </div>
+                            @endif
                         </form>
                     </div>
                 </div>

@@ -12,7 +12,13 @@
                                 style="top: 1rem;right: 1rem;">Create
                                 Transaction</a>
                         @endcan
-                        <div class="table-responsive text-nowrap mt-3">
+                          <select class="form-select position-absolute filterByCashier" aria-label="Default select example" style="top: 1rem;right: 1rem;width: 11rem;">
+                            <option selected>Filter By Cashier</option>
+                            @foreach ($cashiers as $kasir)   
+                                <option value="{{ $kasir->id }}">{{ $kasir->name }}</option>
+                            @endforeach
+                          </select>
+                        <div class="table-responsive text-nowrap mt-4">
                             <table class="table text-center">
                                 <thead>
                                     <tr>
@@ -77,4 +83,12 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('addjs')
+    <script>
+        document.querySelector('.filterByCashier').addEventListener('change', function(e){
+            console.log(e.target.value)
+        })
+    </script>
 @endsection

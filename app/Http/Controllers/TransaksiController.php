@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\User;
 use App\Models\Pesanan;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
@@ -26,8 +27,17 @@ class TransaksiController extends Controller
     public function index()
     {
         $transaksis = Transaksi::where('user_id', \Auth::user()->id)->get();
+        $cashiers = [];
+
+        foreach (User::all() as $key => $user) {
+            if($user->hasRole('kasir')){
+                $cashiers[] = $user;
+            }
+        }
+
         return view('transaksi.index', [
-            'transaksis' => $transaksis
+            'transaksis' => $transaksis,
+            'cashiers' => $cashiers
         ]);
     }
 
