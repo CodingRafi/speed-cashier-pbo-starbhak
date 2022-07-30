@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/transaksi', TransaksiController::class);
     Route::resource('/pesanan', PesananController::class);
+    Route::get('/downloadPDF',[TransaksiController::class, 'pdf']);
 });
 
 

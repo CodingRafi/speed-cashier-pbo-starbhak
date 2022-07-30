@@ -98,6 +98,18 @@
                                     </li>
                                 </ul>
                             </div>
+                            <form action="/downloadPDF" method="get">
+                                @if (request('kasir'))
+                                    <input type="hidden" name="kasir" value="{{ request('kasir') }}">
+                                @endif
+                                @if (request('start'))
+                                    <input type="hidden" name="start" value="{{ request('start') }}">
+                                @endif
+                                @if (request('end'))
+                                    <input type="hidden" name="end" value="{{ request('end') }}">
+                                @endif
+                                <button type="submit" class="btn btn-primary">Export and Download PDF</button>
+                            </form>
                             @endcan
                         </div>
                         <div class="table-responsive text-nowrap mt-4">

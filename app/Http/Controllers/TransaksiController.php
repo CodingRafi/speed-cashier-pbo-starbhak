@@ -9,6 +9,7 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
+use PDF;
 
 class TransaksiController extends Controller
 {
@@ -27,14 +28,9 @@ class TransaksiController extends Controller
     public function index()
     {
         if(\Auth::user()->hasRole('manager')){
-            if(request('kasir')){
-                $transaksis = Transaksi::filter(request(['kasir', 'start', 'end']))->get();
-            }else{
-                $transaksis = Transaksi::all();
-            }
+            $transaksis = Transaksi::filter(request(['kasir', 'start', 'end']))->get();
         }else{
             $transaksis = Transaksi::where('user_id', \Auth::user()->id)->get();
-
         }
         $cashiers = [];
 
@@ -156,5 +152,12 @@ class TransaksiController extends Controller
         $transaksi->delete();
 
         return redirect()->back();
+    }
+
+    public function pdf(){
+        $transaksis = Transaksi::filter(request(['kasir', 'start', 'end']))->get();
+        $pdf = PDF::loadView('transaksi.export', compact('transaksis'));
+        
+        return $pdf->download('Laporan Penjualan.pdf');
     }
 }

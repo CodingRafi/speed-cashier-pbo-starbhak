@@ -7,6 +7,7 @@ use App\Models\Transaksi;
 use App\Models\Kategori;
 use App\Models\Menu;
 use App\Models\User;
+use App\Models\Log;
 
 class DashboardController extends Controller
 {
@@ -19,14 +20,18 @@ class DashboardController extends Controller
         }else if(\Auth::user()->hasRole('manager')){
             $jmlCategories = Kategori::all()->count();
             $jmlMenus = Menu::all()->count();
+            $logs = Log::all();
             return view('dashboard', [
                 'categories' => $jmlCategories,
-                'menus' => $jmlMenus
+                'menus' => $jmlMenus,
+                'logs' => $logs
             ]);
         }else if(\Auth::user()->hasRole('admin')){
             $users = User::all()->count();
+            $logs = Log::all();
             return view('dashboard', [
-                'users' => $users
+                'users' => $users,
+                'logs' => $logs
             ]);
         }
 

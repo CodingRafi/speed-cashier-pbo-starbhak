@@ -24,13 +24,13 @@
               <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email or Username</label>
+                  <label for="email" class="form-label">Email</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
                     name="email"
-                    placeholder="Enter your email or username"
+                    placeholder="Enter your email"
                     autofocus
                   />
                 </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
+                    <input class="form-check-input" type="checkbox" id="remember-me" name="remember"/>
                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                   </div>
                 </div>
