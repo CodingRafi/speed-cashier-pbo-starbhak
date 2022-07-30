@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
     
         $roleKasir = Role::create(['name' => 'kasir']);
      
-        $permissionsKasir = ['13', '14', '15', '16'];
+        $permissionsKasir = ['13', '14', '15', '16', '21'];
    
         $roleKasir->syncPermissions($permissionsKasir);
      

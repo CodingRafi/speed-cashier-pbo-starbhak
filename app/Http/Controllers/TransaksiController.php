@@ -26,7 +26,16 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $transaksis = Transaksi::where('user_id', \Auth::user()->id)->get();
+        if(\Auth::user()->hasRole('manager')){
+            if(request('kasir')){
+                $transaksis = Transaksi::filter(request(['kasir', 'start', 'end']))->get();
+            }else{
+                $transaksis = Transaksi::all();
+            }
+        }else{
+            $transaksis = Transaksi::where('user_id', \Auth::user()->id)->get();
+
+        }
         $cashiers = [];
 
         foreach (User::all() as $key => $user) {

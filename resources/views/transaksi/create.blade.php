@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Create User</button>
+                            <button type="submit" class="btn btn-primary">Create Transaction</button>
                             @else
                             <div class="container d-flex mt-5 justify-content-center align-items-center">
                                 <div class="alert alert-primary" role="alert">

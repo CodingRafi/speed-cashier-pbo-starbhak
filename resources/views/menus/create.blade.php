@@ -9,6 +9,7 @@
                         <h5 class="card-title text-primary">Create Menu</h5>
                         <form action="/menu" method="post">
                             @csrf
+                            @if (count($categories) > 0)
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Menu</label>
                                 <input type="text" class="form-control" id="nama" name="nama"
@@ -28,6 +29,13 @@
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Create Menu</button>
+                            @else
+                            <div class="container d-flex mt-5 justify-content-center align-items-center">
+                                <div class="alert alert-primary" role="alert">
+                                    Maaf, Tidak ada Kategori tersedia
+                                  </div>
+                            </div>
+                            @endif
                         </form>
                     </div>
                 </div>
