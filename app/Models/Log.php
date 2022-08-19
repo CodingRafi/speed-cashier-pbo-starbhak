@@ -21,4 +21,11 @@ class Log extends Model
             'user_id' => \Auth::user()->id
         ]);
     }
+
+    static public function logCreateApi($message, $user){
+        Log::create([
+            'message' => $message,
+            'user_id' => $user->id
+        ]);
+    }
 }
