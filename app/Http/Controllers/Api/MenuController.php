@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\Kategori;
 use App\Models\Log;
+use App\Models\Koleksi;
+use App\Models\Foto;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
+use App\Http\Resources\ResponseResource;
+use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller
 {
@@ -19,10 +23,15 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::all();
-        return view('menus.index', [
-            'menus' => $menus
-        ]);
+        $menus = [];
+
+        foreach (Menu::all() as $key => $menu) {
+            $menus[] = [
+                'data' => $menu,
+                'fotos' => $menu->koleksi[0]->foto
+            ];
+        }
+        return new ResponseResource(true, 'List Data Menu', $menus);
     }
 
     /**
@@ -32,10 +41,10 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $categories = Kategori::all();
-        return view('menus.create', [
-            'categories' => $categories
-        ]);
+        // $categories = Kategori::all();
+        // return view('menus.create', [
+        //     'categories' => $categories
+        // ]);
     }
 
     /**
@@ -46,17 +55,41 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama' => 'required',
             'harga' => 'required|numeric',
-            'kategori_id' => 'required' 
+            'kategori_id' => 'required',
+            'satuan' => 'required',
+            'fotos' => 'required',
+            'fotos.*' => 'mimes:jpg,jpeg,png|max:5024',
         ]);
 
-        Menu::create($validatedData);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-        Log::logCreate('Menambahkan Menu ' . $request->nama);
+        
+        $menu = Menu::create([
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'kategori_id' => $request->kategori_id,
+            'satuan' => $request->satuan
+        ]);
+        
+        
+        $koleksi = Koleksi::create([
+            'menu_id' => $menu->id
+        ]);
+        Foto::uploadFoto($request->fotos, $koleksi);
+        
+        Log::logCreateApi('Menambahkan Menu ' . $request->nama, $request);
 
-        return redirect('/menu');
+        $data = [
+            'menu' => $menu,
+            'fotos' => $menu->koleksi[0]->foto
+        ];
+
+        return new ResponseResource(true, 'Menu Berhasil Ditambahkan', $data);
     }
 
     /**
@@ -78,11 +111,11 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        $categories = Kategori::all();
-        return view('menus.edit', [
-            'menu' => $menu,
-            'categories' => $categories
-        ]);
+        // $categories = Kategori::all();
+        // return view('menus.edit', [
+        //     'menu' => $menu,
+        //     'categories' => $categories
+        // ]);
     }
 
     /**
@@ -94,19 +127,38 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama' => 'required',
             'harga' => 'required|numeric',
-            'kategori_id' => 'required' 
+            'kategori_id' => 'required',
+            'satuan' => 'required'
         ]);
+        
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        if($request->file('fotos')){
+            Foto::uploadFoto($request->fotos, $menu->koleksi[0]);
+        }  
 
         $oldMenu = Menu::findOrFail($menu->id);
         
-        $menu->update($validatedData);
+        $menu->update([
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'kategori_id' => $request->kategori_id,
+        ]);
 
-        Log::logCreate('Mengubah menu ' . $oldMenu->nama);
+        $data = [
+            'menu' => $menu,
+            'kategori' => $menu->kategori,
+            'fotos' => $menu->koleksi[0]->foto
+        ];
 
-        return redirect('/menu');
+        Log::logCreateApi('Mengubah Menu ' . $request->nama, $request);
+
+        return new ResponseResource(true, 'Menu Berhasil Diubah', $menu);
     }
 
     /**
@@ -115,10 +167,21 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu)
+    public function destroy(Request $request, $id)
     {
+        $menu = Menu::findOrFail($id);
+        
+        foreach ($menu->koleksi as $koleksi) {
+            foreach ($koleksi->foto as $key => $foto) {
+                $foto->delete();
+            }
+            $koleksi->delete();
+        }
+
         $menu->delete();
-        Log::logCreate('Menghapus menu ' . $menu->nama);
-        return redirect()->back();
+
+        Log::logCreateApi('Menghapus menu ' . $request->nama, $request);
+
+        return new ResponseResource(true, 'Menu Berhasil Dihapus', null);
     }
 }

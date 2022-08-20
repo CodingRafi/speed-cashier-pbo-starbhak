@@ -22,7 +22,11 @@ class Log extends Model
         ]);
     }
 
-    static public function logCreateApi($message, $user){
+    static public function logCreateApi($message, $request){
+        $token = $request->header('Authorization');
+        $token = explode(' ', $token)[1];
+        $user = User::where('api_token', $token)->first();
+
         Log::create([
             'message' => $message,
             'user_id' => $user->id

@@ -18,4 +18,8 @@ class Menu extends Model
     public function pesanan(){
         return $this->hasMany(Pesanan::class);
     }
+
+    public function koleksi(){
+        return $this->hasMany(Koleksi::class);
+    }
 }

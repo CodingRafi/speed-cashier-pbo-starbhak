@@ -35,4 +35,18 @@ class AuthController extends Controller
         ], 422);
 
     }
+
+    public function logout(Request $request){
+        $token = $request->header('Authorization');
+        $token = explode(' ', $token)[1];
+
+        $user = User::where('api_token', $token)->first();
+        $user->api_token = null;
+        $user->api_created_at = null;
+        $user->save();
+
+        return response()->json([
+            'message' => 'successfully logged out'
+        ], 200);
+    }
 }

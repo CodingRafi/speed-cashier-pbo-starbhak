@@ -8,7 +8,7 @@ use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\KategoriResource;
+use App\Http\Resources\ResponseResource;
 
 class KategoriController extends Controller
 {
@@ -21,7 +21,7 @@ class KategoriController extends Controller
     {
         $categories = Kategori::all();
 
-        return new KategoriResource(true, 'List Data Category', $categories);
+        return new ResponseResource(true, 'List Data Category', $categories);
     }
 
     /**
@@ -55,13 +55,9 @@ class KategoriController extends Controller
             'nama' => $request->nama
         ]);
         
-        $token = $request->header('Authorization');
-        $token = explode(' ', $token)[1];
-        $user = User::where('api_token', $token)->first();
-
-        Log::logCreateApi('Menambahkan Category ' . $request->nama, $user);
+        Log::logCreateApi('Menambahkan Category ' . $request->nama, $request);
         
-        return new KategoriResource(true, 'Kategori Berhasil Ditambahkan', $category);
+        return new ResponseResource(true, 'Kategori Berhasil Ditambahkan', $category);
     }
 
     /**
@@ -108,13 +104,9 @@ class KategoriController extends Controller
             'nama' => $request->nama
         ]);
 
-        $token = $request->header('Authorization');
-        $token = explode(' ', $token)[1];
-        $user = User::where('api_token', $token)->first();
-
-        Log::logCreateApi('Mengubah Category ' . $request->nama, $user);
+        Log::logCreateApi('Mengubah Category ' . $request->nama, $request);
         
-        return new KategoriResource(true, 'Kategori Berhasil Diupdate', $kategori);
+        return new ResponseResource(true, 'Kategori Berhasil Diupdate', $kategori);
     }
 
     /**
@@ -135,12 +127,8 @@ class KategoriController extends Controller
 
         $kategori->delete();
 
-        $token = $request->header('Authorization');
-        $token = explode(' ', $token)[1];
-        $user = User::where('api_token', $token)->first();
+        Log::logCreateApi('Menambahkan Category ' . $request->nama, $request);
 
-        Log::logCreateApi('Menambahkan Category ' . $request->nama, $user);
-
-        return new KategoriResource(true, 'Kategori Berhasil Dihapus', null);
+        return new ResponseResource(true, 'Kategori Berhasil Dihapus', null);
     }
 }
