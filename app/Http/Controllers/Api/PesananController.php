@@ -104,7 +104,7 @@ class PesananController extends Controller
     public function update(Request $request, Pesanan $pesanan)
     {
         $validator = Validator::make($request->all(), [
-            'menu_id' => 'required',
+            '   ' => 'required',
             'jml' => 'required'
         ]);
 
