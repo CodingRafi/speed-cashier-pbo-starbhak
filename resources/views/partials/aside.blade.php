@@ -32,6 +32,22 @@
             </li>
         @endcan
 
+        {{-- kota --}}
+        <li class="menu-item {{ Request::is('kota') ? 'active' : '' }}">
+            <a href="/kota" class="menu-link">
+                <i class='menu-icon bx bx-buildings'></i>
+                <div data-i18n="Analytics">Kota</div>
+            </a>
+        </li>
+
+        {{-- meja --}}
+        <li class="menu-item {{ Request::is('meja') ? 'active' : '' }}">
+            <a href="/meja" class="menu-link">
+                <i class='menu-icon bx bx-table'></i>
+                <div data-i18n="Analytics">Meja</div>
+            </a>
+        </li>
+
         <!-- Category -->
         @can('index_kategori', 'create_kategori', 'edit_kategori', 'delete_kategori')
             <li
