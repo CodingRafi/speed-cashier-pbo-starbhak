@@ -187,6 +187,9 @@ return [
          */
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        // SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -211,6 +214,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

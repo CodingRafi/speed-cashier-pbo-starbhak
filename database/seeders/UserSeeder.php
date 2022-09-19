@@ -55,10 +55,25 @@ class UserSeeder extends Seeder
     
         $roleManager = Role::create(['name' => 'manager']);
      
-        $permissionsManager = ['1', '2', '3', '4', '13','9', '17', '18', '19', '20', '21', '22'];
+        $permissionsManager = ['1', '2', '3', '4', '13','9', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26'];
    
         $roleManager->syncPermissions($permissionsManager);
      
         $manager->assignRole(3);
+
+        // super admin
+        // $super_admin = User::create([
+        //     'name' => 'Super Admin', 
+        //     'email' => 'superadmin@gmail.com',
+        //     'password' => bcrypt('123456')
+        // ]);
+    
+        // $roleSuperAdmin = Role::create(['name' => 'superadmin']);
+     
+        // $permissionSuperAdmin = ['1', '2', '3', '4', '13','9', '17', '18', '19', '20', '21', '22'];
+   
+        // $roleSuperAdmin->syncPermissions($permissionSuperAdmin);
+     
+        // $super_admin->assignRole(3);
     }
 }

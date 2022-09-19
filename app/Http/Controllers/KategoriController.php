@@ -49,7 +49,16 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        Kategori::createKategori($request);
+        $request->validate([
+            'nama' => 'required'
+        ]);
+        
+        $category = Kategori::Create([
+            'nama' => $request->nama
+        ]);
+        
+        Log::logCreate('Menambahkan Category ' . $request->nama, $request);
+        
         return redirect()->back();
     }
 
@@ -84,7 +93,16 @@ class KategoriController extends Controller
      */
     public function update(Request $request, Kategori $kategori)
     {
-        Kategori::updateKategori($request, $kategori);
+        $request->validate([
+            'nama' => 'required'
+        ]);
+
+        $kategori->update([
+            'nama' => $request->nama
+        ]);
+
+        Log::logCreate('Mengubah Category ' . $request->nama, $request);
+        
         return redirect()->back();
     }
 
@@ -94,9 +112,20 @@ class KategoriController extends Controller
      * @param  \App\Models\Kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kategori $kategori)
+    public function destroy(Request $request, $id)
     {   
-        Kategori::deleteKategori($kategori);
+        $kategori = Kategori::where('id', $id)->first();
+
+        $menus = $kategori->menu;
+
+        foreach ($menus as $key => $menu) {
+            $menu->delete();
+        }
+
+        $kategori->delete();
+
+        Log::logCreate('Menghapus Category ' . $request->nama, $request);
+
         return redirect()->back();
     }
 }

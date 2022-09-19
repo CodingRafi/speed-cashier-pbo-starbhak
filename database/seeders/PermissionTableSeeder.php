@@ -42,7 +42,12 @@ class PermissionTableSeeder extends Seeder
             'delete_kategori',
 
             'dashboard',
-            'filter_transaksi'
+            'filter_transaksi',
+
+            'index_meja',
+            'create_meja',
+            'update_meja',
+            'delete_meja',
         ];
 
         foreach ($permissions as $permission) {

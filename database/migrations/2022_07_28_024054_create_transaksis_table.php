@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('meja_id')->constrained();
+            $table->foreignId('meja_id')->nullable()->constrained();
             $table->integer('total_harga');
             $table->enum('status', ['sudah', 'belum']);
             $table->timestamps();

@@ -22,7 +22,7 @@ class Transaksi extends Model
     }
 
     public function meja(){
-        return $this->hasOne(Meja::class);
+        return $this->belongsTo(Meja::class);
     }
 
     static public function updateTotalHarga($transaksi_id){
