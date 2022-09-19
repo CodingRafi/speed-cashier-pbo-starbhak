@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MejaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\KategoriController;
@@ -31,10 +32,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::resource('/user', UserController::class);
     Route::resource('/menu', MenuController::class);
+    Route::resource('/meja', MejaController::class);
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/transaksi', TransaksiController::class);
     Route::resource('/pesanan', PesananController::class);
     Route::get('/downloadPDF',[TransaksiController::class, 'pdf']);
+    Route::get('/bayar/{id}',[TransaksiController::class,"payment"])->name('paypal.payment');
+    Route::get('/paypal-success',[TransaksiController::class,"success"])->name('paypal.success');
+    Route::get('/paypal-cancel',[TransaksiController::class,'cancel'])->name('paypal.cancel');
 });
 
 

@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mejas', function (Blueprint $table) {
-            $table->id();
-            $table->string('no_meja')->unique();
-            $table->enum('status', ['dipakai', 'tidak'])->default('tidak');
-            $table->timestamps();
-        });
+        // DB::unprepared('CREATE TRIGGER count_transaksi AFTER INSERT ON `pesanans` FOR EACH ROW
+        //         BEGIN
+        //            UPDATE `transaksis` SET `total_harga` = (OLD.total_harga) + (NEW.)
+        //         END');
     }
 
     /**
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mejas');
+        // DB::unprepared('DROP TRIGGER `count_transaksi`');
     }
 };

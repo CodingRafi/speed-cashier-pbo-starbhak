@@ -119,6 +119,7 @@
                                         <th>No</th>
                                         <th>Pesanan</th>
                                         <th>Total Harga</th>
+                                        <th>No Meja</th>
                                         <th>Tanggal</th>
                                         @can('update_transaksi', 'delete_transaksi')
                                             <th>Actions</th>
@@ -152,9 +153,11 @@
                                                 </table>
                                             </td>
                                             <td>Rp. {{ $transaksi->total_harga }}</td>
+                                            <td>{{ $transaksi->meja->no_meja }}</td>
                                             <td>{{ $transaksi->created_at->format('d M Y'); }}</td>
                                             @can('update_transaksi', 'delete_transaksi')
                                                 <td class="d-flex justify-content-center">
+                                                    <a href="/bayar/{{ $transaksi->id }}" class="btn btn-info" style="margin-right: 1rem;">Bayar</a>
                                                     @can('update_transaksi')
                                                         <a href="/transaksi/{{ $transaksi->id }}/edit" class="btn btn-warning" style="margin-right: 1rem;">Update</a>
                                                     @endcan

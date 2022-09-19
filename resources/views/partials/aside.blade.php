@@ -33,6 +33,17 @@
         @endcan
 
         <!-- Category -->
+        @can('index_meja', 'create_meja', 'edit_meja', 'delete_meja')
+            <li
+                class="menu-item {{ Request::is('meja/*') ? 'active' : '' }} {{ Request::is('meja') ? 'active' : '' }}">
+                <a href="/meja" class="menu-link">
+                    <i class='menu-icon tf-icons bx bx-calendar'></i>
+                    <div data-i18n="Analytics">Meja</div>
+                </a>
+            </li>
+        @endcan
+            
+        <!-- Category -->
         @can('index_kategori', 'create_kategori', 'edit_kategori', 'delete_kategori')
             <li
                 class="menu-item {{ Request::is('kategori/*') ? 'active' : '' }} {{ Request::is('kategori') ? 'active' : '' }}">
