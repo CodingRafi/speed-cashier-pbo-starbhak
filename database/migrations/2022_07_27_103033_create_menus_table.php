@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->foreignId('kategori_id')->constrained();
-            $table->enum('satuan', ['pcs', 'kg', 'gr']);
             $table->timestamps();
         });
     }

@@ -91,12 +91,14 @@ class TransaksiController extends Controller
             'total_harga' => 0,
             'meja_id' => $request->meja_id
         ]);
-
-        $totalHargaPesanan = 0;
-
+        
+        // $totalHargaPesanan = 0;
+        
+        // dd('oke');
+        
         foreach ($request->menu_id as $key => $menu) {
             $menuQuery = Menu::findOrFail($menu);
-
+            
             Pesanan::create([
                 'transaksi_id' => $transaksi->id,
                 'menu_id' => $menu,
@@ -104,12 +106,12 @@ class TransaksiController extends Controller
                 'total_harga' => $menuQuery->harga * $request->jml[$key]
             ]);
 
-            $totalHargaPesanan += $menuQuery->harga * $request->jml[$key];
+            // $totalHargaPesanan += $menuQuery->harga * $request->jml[$key];
         }
 
-        $transaksi->update([
-            'total_harga' => $totalHargaPesanan
-        ]);
+        // $transaksi->update([
+        //     'total_harga' => $totalHargaPesanan
+        // ]);
 
         return redirect('/transaksi');
     }
@@ -202,7 +204,6 @@ class TransaksiController extends Controller
         $amount = new Amount();
         $amount->setCurrency("USD")
             ->setTotal($sume);
-
 
         // Set transaction object
         $transaction = new Transaction();
