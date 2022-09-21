@@ -45,8 +45,10 @@ class PesananController extends Controller
             'transaksi_id' => 'required'
         ]);
 
+        
         foreach ($request->menu_id as $key => $menu) {
             $menuQuery = Menu::findOrFail($menu);
+            // dd($menuQuery->harga * $request->jml[$key]);
 
             Pesanan::create([
                 'transaksi_id' => $request->transaksi_id,
