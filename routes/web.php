@@ -45,22 +45,22 @@ Route::middleware(['auth'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/kota', function() {
-    return view('kota.index');
-});
+// Route::get('/kota', function() {
+//     return view('kota.index');
+// });
 
-Route::get('/meja', function() {
-    return view('meja.index');
-});
+// Route::get('/meja', function() {
+//     return view('meja.index');
+// });
 
-Route::get('/registerRestoran', function() {
-    return view('auth.registerRestoran');
-});
+// Route::get('/registerRestoran', function() {
+//     return view('auth.registerRestoran');
+// });
 
-Route::get('/restoran', function() {
-    return view('restoran.index');
-});
+// Route::get('/restoran', function() {
+//     return view('restoran.index');
+// });
 
-Route::get('/restoran-create', function() {
-    return view('restoran.create');
-});
+// Route::get('/restoran-create', function() {
+//     return view('restoran.create');
+// });
