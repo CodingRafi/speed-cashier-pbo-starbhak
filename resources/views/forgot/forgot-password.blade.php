@@ -5,16 +5,15 @@
 @endsection
 
 @section('container')
-	<div class="container-xxl">
+	<div class="container-xxl" style="width: 100%; height: 100vh; background-image: url('/assets/img/backgrounds/bg_speedCashier_edit1.jpg'); background-size: cover; background-repeat: no-repeat;">
 		<div class="authentication-wrapper authentication-basic container-p-y">
-			<div class="authentication-inner py-4">
+			{{-- <div class="authentication-inner py-4"> --}}
 				<!-- Forgot Password -->
-				<div class="card">
+				<div class="card" style="margin: 100px; width: 25rem;">
 					<div class="card-body">
 						<!-- Logo -->
 						<div class="app-brand justify-content-center">
-							<a href="index.html" class="app-brand-link gap-2">
-							<span class="app-brand-text demo text-body fw-bolder">Speed Cashier</span>
+							<span class="app-brand-text demo text-body fw-bolder" style="text-transform: capitalize">Speed Cashier</span>
 							</a>
 						</div>
 						<!-- /Logo -->
