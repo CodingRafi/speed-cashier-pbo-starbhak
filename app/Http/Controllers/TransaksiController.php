@@ -92,9 +92,6 @@ class TransaksiController extends Controller
             'meja_id' => $request->meja_id
         ]);
         
-        // $totalHargaPesanan = 0;
-        
-        // dd('oke');
         
         foreach ($request->menu_id as $key => $menu) {
             $menuQuery = Menu::findOrFail($menu);
@@ -106,12 +103,7 @@ class TransaksiController extends Controller
                 'total_harga' => $menuQuery->harga * $request->jml[$key]
             ]);
 
-            // $totalHargaPesanan += $menuQuery->harga * $request->jml[$key];
         }
-
-        // $transaksi->update([
-        //     'total_harga' => $totalHargaPesanan
-        // ]);
 
         return redirect('/transaksi');
     }
