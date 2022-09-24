@@ -24,7 +24,7 @@ class Transaksi extends Model
     public function meja(){
         return $this->belongsTo(Meja::class);
     }
-
+    
     static public function updateTotalHarga($transaksi_id){
         $allPesanan = Pesanan::where('transaksi_id', $transaksi_id)->get();
         

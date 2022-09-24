@@ -47,7 +47,7 @@
         </div>
         <div class="col-4">
             @if ( Auth::user()->hasRole('admin') || Auth::user()->hasRole('manager') )
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <div class="card-body" style="height: 30rem;overflow: auto">
                   <h4 class="card-title">Log Pengguna</h4>
                   @foreach ($logs as $log)  

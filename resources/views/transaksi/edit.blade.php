@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <button class="btn btn-primary d-flex justify-content-center align-items-center position-absolute tambah-colom" style="top: 1rem;right: 1rem;">+ Add Menu</button>
                         <h5 class="card-title text-primary">Update Transaksi</h5>
-
+                        
                         @foreach ($transaksi->pesanan as $pesanan)
                         <form action="/pesanan/{{ $pesanan->id }}" method="post">
                             @csrf

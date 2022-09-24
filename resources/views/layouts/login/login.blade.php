@@ -5,11 +5,11 @@
 @endsection
 
 @section('container')
-<div class="container d-flex align-item-center justify-content" style="width: 30rem;">
+<div class="content-wrapper d-flex" style="width: 100%; height: 100vh; background-image: url('/assets/img/backgrounds/bg_speedCashier_edit1.jpg'); background-size: cover; background-repeat: no-repeat;">
       <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
+        {{-- <div class="authentication-inner"> --}}
           <!-- Register -->
-          <div class="card">
+          <div class="card" style="width: 30rem">
             <div class="card-body">
               <!--  o -->
               <div class="app-brand justify-content-center">
@@ -68,7 +68,7 @@
             </div>
           </div>
           <!-- /Register -->
-        </div>
+        {{-- </div> --}}
       </div>
     </div>
     @endsection

@@ -77,9 +77,6 @@
         let buttonHapusKe = 2;
 
         tambahColom.addEventListener('click', function(){
-            // const containerInput = document.createElement("div");
-            // containerInput.setAttribute('class', `row container-input-${buttonHapusKe}`);
-            // containerForm.appendChild(containerInput);
 
             containerForm.innerHTML +=  `<div class="row container-input-${buttonHapusKe}">
                                     <div class="col-8">
